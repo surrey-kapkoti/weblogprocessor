@@ -7,7 +7,7 @@
 [0m[[0mdebug[0m] [0m== resolving dependencies for weblogprocessor#weblogprocessor_2.10;0.0.1 [compile][0m
 [0m[[0mdebug[0m] [0m== resolving dependencies weblogprocessor#weblogprocessor_2.10;0.0.1->org.scala-lang#scala-library;2.10.6 [compile->default(compile)][0m
 [0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.10.6 ...[0m
-[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@63b87866[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@1e2575c[0m
 [0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.scala-lang#scala-library;2.10.6[0m
 [0m[[0mdebug[0m] [0m	found org.scala-lang#scala-library;2.10.6 in sbt-chain[0m
 [0m[[0mdebug[0m] [0m	[2.10.6] org.scala-lang#scala-library;2.10.6[0m
@@ -26294,7 +26294,7 @@
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-lang#scala-compiler;2.10.6!scala-compiler.jar[0m
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-lang#jline;2.10.6!jline.jar[0m
 [0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.fusesource.jansi#jansi;1.4!jansi.jar[0m
-[0m[[0mdebug[0m] [0m:: resolution report :: resolve 7813ms :: artifacts dl 156ms[0m
+[0m[[0mdebug[0m] [0m:: resolution report :: resolve 7016ms :: artifacts dl 122ms[0m
 [0m[[0mdebug[0m] [0m	report for weblogprocessor#weblogprocessor_2.10;0.0.1 compile produced in /usr/local/spark/myprojects/src/target/resolution-cache/reports/weblogprocessor-weblogprocessor_2.10-compile.xml[0m
 [0m[[0mdebug[0m] [0m	report for weblogprocessor#weblogprocessor_2.10;0.0.1 runtime produced in /usr/local/spark/myprojects/src/target/resolution-cache/reports/weblogprocessor-weblogprocessor_2.10-runtime.xml[0m
 [0m[[0mdebug[0m] [0m	report for weblogprocessor#weblogprocessor_2.10;0.0.1 test produced in /usr/local/spark/myprojects/src/target/resolution-cache/reports/weblogprocessor-weblogprocessor_2.10-test.xml[0m
@@ -26308,7 +26308,7 @@
 [0m[[0mdebug[0m] [0m	report for weblogprocessor#weblogprocessor_2.10;0.0.1 docs produced in /usr/local/spark/myprojects/src/target/resolution-cache/reports/weblogprocessor-weblogprocessor_2.10-docs.xml[0m
 [0m[[0mdebug[0m] [0m	report for weblogprocessor#weblogprocessor_2.10;0.0.1 pom produced in /usr/local/spark/myprojects/src/target/resolution-cache/reports/weblogprocessor-weblogprocessor_2.10-pom.xml[0m
 [0m[[0mdebug[0m] [0m	report for weblogprocessor#weblogprocessor_2.10;0.0.1 scala-tool produced in /usr/local/spark/myprojects/src/target/resolution-cache/reports/weblogprocessor-weblogprocessor_2.10-scala-tool.xml[0m
-[0m[[0mdebug[0m] [0m	resolve done (7813ms resolve - 156ms download)[0m
+[0m[[0mdebug[0m] [0m	resolve done (7016ms resolve - 122ms download)[0m
 [0m[[0minfo[0m] [0mDone updating.[0m
 [0m[[33mwarn[0m] [0mScala version was updated by one of library dependencies:[0m
 [0m[[33mwarn[0m] [0m	* org.scala-lang:scala-compiler:2.10.0 -> 2.10.4[0m

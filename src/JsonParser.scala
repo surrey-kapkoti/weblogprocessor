@@ -15,14 +15,14 @@ object JsonParser {
 
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 
-    val path = "/home/hduser/Downloads/1.json"
+    val path = "/home/hduser/Downloads/logs/"
     val webLog = sqlContext.jsonFile(path)
 
     webLog.printSchema()
 
     webLog.registerTempTable("webLogTable")
 
-    val teenagers = sqlContext.sql("SELECT backend,count(backend), avg(session_duration), sum(bytes_read), sum(bytes_uploaded) FROM webLogTable where backend is not null group by backend order by backend, count(backend) desc")
+    val teenagers = sqlContext.sql("SELECT backend_name,count(backend_name), avg(session_duration), sum(bytes_read), sum(bytes_uploaded) FROM webLogTable where backend_name is not null group by backend_name order by backend_name, count(backend_name) desc")
     val webDataRdd = teenagers.rdd
     val outputPath = "output"
 

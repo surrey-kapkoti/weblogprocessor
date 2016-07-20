@@ -14,14 +14,14 @@ object ServerLoad {
 
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 
-    val path = "/home/hduser/Downloads/1.json"
+    val path = "/home/hduser/Downloads/logs/"
     val webLog = sqlContext.jsonFile(path)
 
     webLog.printSchema()
 
     webLog.registerTempTable("webLogTable")
 
-    val teenagers = sqlContext.sql("SELECT upstream_addr, backend,count(http_request) FROM webLogTable where backend is not null group by upstream_addr, backend order by upstream_addr, count(http_request)desc")
+    val teenagers = sqlContext.sql("SELECT upstream_addr, backend_name,count(http_request) FROM webLogTable where backend_name is not null group by upstream_addr, backend_name order by upstream_addr, count(http_request)desc")
     val webDataRdd = teenagers.rdd
     val outputPath = "output"
     //println( "count = ........" + b.count )
