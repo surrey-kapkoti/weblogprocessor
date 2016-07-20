@@ -1,0 +1,40 @@
+-Install hadoop and make sure that all the dfs and yarn processes are running
+-make directories in hdfs
+-save data files to dhfs
+-list the directories and files various directories
+-get the data of the files using hadoop commands
+
+Goal:
+write a basic program for reading data from hdfs.
+	- read data using shell from local file system
+	- read data in a standalone application from hdfs
+	- apply some filters to the data
+-Build it using shell-sbt 
+-Make a project in Eclipse and deploy using it
+-push it to Git
+
+
+-Goals:
+1. Setup the logging server "rsyslog" on haproxy
+2. Setup logrotate server on haproxy
+3. Using logrotate upload the log files to S3 using cron job
+4. Process the web logs using spark from local file , s3
+5. Analysis 1: site  | totalAPI calls | Average session duration | Bytes read | bytes uploaded
+6. Analysis 2: site  | API            | Avegare session duration | count of calls for API | Total bytes read for API | total bytes uploaded for API
+7. Analysis 3: Server | site	      | Total calls
+
+Goal : read json file and use sql query to query the data on various json fields.
+Things explored:
+1. making a package and making multiple classes in it using console
+2. Build the package using SBT
+3. submitting job to spark in local mode
+4. including the thrird party libraries
+5. jar hell
+6. using play json to read the json file and initialize a class( could not accomplish this. while submitting the task linker was failing to get the symbols related to play json, i suspect this had something to do with different play-json libraries. As is was taking more time than expected I stopped this)
+7. Final approach that worked-
+ 	1. Reading the json file using sql contect jsonFile API 
+ 	2. Making a temp tabel from it 
+ 	3. querying on the table using sql
+
+
+TODO: read json from gzip single file and all files in a folder on local/S3

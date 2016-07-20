@@ -1,0 +1,189 @@
+- print count of the log entries whose return status is 500
+package com.oreilly.learningsparkexamples
+
+import org.apache.spark._
+import org.apache.spark.SparkContext._
+
+object FileProcessor {
+        def main(args: Array[String]){
+          val conf = new SparkConf().setAppName("FileProcessor")
+          val sc = new SparkContext(conf)
+          val inputRDD = sc.textFile("/home/hduser/Downloads/1.txt")
+         // val inputRDD = sc.textFile("hdfs://localhost:9000/user/hadoop/dir1/block_1.csv")
+          //for( line <- inputRDD
+        //      if isHeader(line)) println(line)
+          val filtered = inputRDD.filter( str => str.contains("""http_status":500""")).count
+         // filtered.collect().foreach(println)
+        println("................" + filtered)
+        }
+
+        def isHeader( line : String ) : Boolean = {
+           line.contains("""http_status":200""")
+        }
+}
+
+
+
+
+-save to an output folder all the log entries of "GetAppUpdateXmls" API call
+package com.oreilly.learningsparkexamples
+
+import org.apache.spark._
+import org.apache.spark.SparkContext._
+
+object FileProcessor {
+        def main(args: Array[String]){
+          val conf = new SparkConf().setAppName("FileProcessor")
+          val sc = new SparkContext(conf)
+          val inputRDD = sc.textFile("/home/hduser/Downloads/1.txt")
+         // val inputRDD = sc.textFile("hdfs://localhost:9000/user/hadoop/dir1/block_1.csv")
+          //for( line <- inputRDD
+        //      if isHeader(line)) println(line)
+         // val filtered = inputRDD.filter( str => str.contains("GetAppUpdateXmls")).count
+        val filtered = inputRDD.filter( str => str.contains("GetAppUpdateXmls"))
+        filtered.saveAsTextFile("/home/hduser/Downloads/output.txt")
+        }
+
+        def isHeader( line : String ) : Boolean = {
+           line.contains("""http_status":200""")
+        }
+}
+
+
+package com.oreilly.learningsparkexamples
+
+import org.apache.spark._
+import org.apache.spark.SparkContext._
+
+object FileProcessor {
+        def main(args: Array[String]){
+          val conf = new SparkConf().setAppName("FileProcessor")
+          val sc = new SparkContext(conf)
+          val inputRDD = sc.textFile("/home/hduser/Downloads/1.txt")
+         // val inputRDD = sc.textFile("hdfs://localhost:9000/user/hadoop/dir1/block_1.csv")
+          //for( line <- inputRDD
+        //      if isHeader(line)) println(line)
+         // val filtered = inputRDD.filter( str => str.contains("GetAppUpdateXmls")).count
+        val filtered = inputRDD.flatMap( line => line.split(","))
+        println("........................." + filtered.first())
+        filtered.saveAsTextFile("/home/hduser/Downloads/output")
+        }
+
+        def isHeader( line : String ) : Boolean = {
+           line.contains("""http_status":200""")
+        }
+}
+
+
+
+
+
+package com.oreilly.learningsparkexamples
+
+import org.apache.spark._
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
+
+
+object JsonProcessor {
+   //case class Person(name: String, lovesPandas: Boolean)
+  case class Weblogs(Type:String, timestamp: Long, http_status: Int, http_request: String, remote_addr: String, bytes_read: Long, upstream_addr: String, backend_name: String, retries: Int, bytes_uploaded: Long, upstream_connect_time: Int, session_duration: Int)
+
+  implicit val personReads = Json.format[Weblogs]
+
+  def main(args: Array[String]) {
+    if (args.length < 3) {
+      println("Usage: [sparkmaster] [inputfile] [outputfile]")
+      exit(1)
+      }
+
+    val master = args(0)
+    val inputFile = args(1)
+    val outputFile = args(2)
+    val sc = new SparkContext(master, "JsonProcessor", System.getenv("SPARK_HOME"))
+    val input = sc.textFile(inputFile)
+    val parsed = input.map(Json.parse(_))
+    println("parsed data......................" + input.first)
+    // We use asOpt combined with flatMap so that if it fails to parse we
+    // get back a None and the flatMap essentially skips the result.
+    //val result = parsed.flatMap(record => personReads.reads(record).asOpt)
+    //println("......................" + result.first )
+    //result.filter(_.backend_name == "API_JuicerApi").map(Json.toJson(_)).saveAsTextFile(outputFile)
+    //result.map(Json.toJson(_)).saveAsTextFile(outputFile)
+    }
+
+}
+
+
+//import org.apache.spark.sql.hive.HiveContext;
+//import org.apache.spark.sql.SQLContext;
+//import org.apache.spark.sql.SchemaRDD;
+//import org.apache.spark.sql.Row;
+import org.apache.spark._
+import org.apache.spark.SparkContext._
+//import org.apache.spark.sql.SQLContext
+import org.apache.spark._
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
+
+
+case class Weblogs(Type:String, timestamp: Long, http_status: Int, http_request: String, remote_addr: String, bytes_read: Long, upstream_addr: String, backend_name: String, retries: Int, bytes_uploaded: Long, upstream_connect_time: Int, session_duration: Int)
+
+val sqlCtx = new SQLContext(sc)
+import sqlCtx.implicits._
+
+val input = sc.textFile("/home/hduser/Downloads/1.txt")
+val input1 = input.map( line => line.split(","))
+val input3 = input1.map( wl => Weblogs(wl(0), wl(1).trim.toLong,wl(2).trim.toInt,wl(3),wl(4),wl(5).trim.toLong, wl(6), wl(7), wl(8).trim.toInt, wl(9).trim.toLong, wl(10).trim.toInt, wl(11).trim.toInt )).toDF()
+input3.registerTempTable("input3")
+
+val websites = sqlCtx.sql("""SELECT backend_name, bytes_uploaded from input3 WHERE backend_name = "Website_DigitalJuice"""")
+websites.map(t => "Backend: " + t(0)).collect().foreach(println)
+        //      websites.map(_.getValuesMap[Any](List("backend_name", "bytes_uploaded"))).collect().foreach(println)
+        //      websites.map( t => "backend_name: " + t.getAs[String]("backend_name")).collect().foreach(println)
+
+
+val input3 = aDF.map(x=>Row(x.getAs[String]("Type"), x.getAs[Long]("timestamp"), x.getAs[Int]("http_status"), x.getAs[String]("http_request"), x.getAs[String]("remote_addr"), x.getAs[Long]("bytes_read"), x.getAs[String]("upstream_addr"), x.getAs[String]("backend_name"), x.getAs[Int]("retries"), x.getAs[Long]("bytes_uploaded"), x.getAs[Int]("upstream_connect_time"), x.getAs[Int]("session_duration"))
+
+
+
+
+
+val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+
+import sqlContext.implicits._
+
+case class Person(name: String, age: String)
+
+
+val people = sc.textFile("/usr/local/spark/myprojects/people.txt").map(_.split(",")).map(p => Person(p(0), p(1))).toDF()
+
+people.registerTempTable("people")
+
+val teenagers = sqlContext.sql("SELECT name, age FROM people")
+
+teenagers.map(t => "Name: " + t(0)).collect().foreach(println)
+
+
+teenagers.map(t => "Name: " + t.getAs[String]("name")).collect().foreach(println)
+
+
+teenagers.map(_.getValuesMap[Any](List("name", "age"))).collect().foreach(println)
+
+
+ASSEMBLY_JAR=./target/scala-2.10/learning-spark-examples-assembly-0.0.1.jar
+
+$SPARK_HOME/bin/spark-submit --class package com.oreilly.learningsparkexamples.JsonProcessor target/scala-2.10/learning-spark-examples_2.10-0.0.1.jar local /home/hduser/Downloads/1.json output
+
+$SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.scala.BasicParseJson target/scala-2.10/learning-spark-examples_2.10-0.0.1.jar local /home/hduser/Downloads/1.json output
+
+
+
+sales.map{ case (website, bytes_read, bytes_uploaded) => ((website), (bytes_read, bytes_uploaded)) }.
+  reduceByKey((x, y) => 
+   (x._1 + y._1, , x._4 + y._4)).collect
+
+
+
+
+

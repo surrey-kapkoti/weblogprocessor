@@ -1,0 +1,75 @@
+Rebuild:
+mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests clean package
+
+Build:
+mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests package
+
+continue from spark-sql_2.10:
+mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests package -rf :spark-repl_2.11
+
+Use scala version to 2.11 
+./dev/change-scala-version.sh 2.11
+mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests package
+
+adding an environment variable:
+open ~./bashrc file
+add - PATH=$PATH:/PATH TO ADD
+
+Restart the bashrc by:
+. ~/.bashrc
+
+
+build spark:
+1. install scala( install scala version 2.10.6)
+2. download spark
+3. start hadoop
+4. set hadoop path in spark config file
+5. build spark using mvn
+
+
+
+
+install protobuff compiler 2.5.0 for building hadoop: a nice article
+http://stackoverflow.com/questions/29797763/how-do-i-install-protobuf-2-5-on-arch-linux-for-compiling-hadoop-2-6-0-using-mav
+dependency libtool, cmake and autoreconf should be installed
+
+
+-Problem : Datanode/name Node not starting :
+
+	-Solution:
+	STEP 1 : stop hadoop and clean temp files from hduser
+
+	sudo rm -R /tmp/*
+	sudo rm -r /app/hadoop/tmp
+	sudo mkdir -p /app/hadoop/tmp
+	sudo chown hduser:hadoop /app/hadoop/tmp
+	sudo chmod 750 /app/hadoop/tmp
+
+	STEP 2: format namenode
+	hdfs namenode -format
+
+	start-dfs.sh
+	start-yarn.sh
+	jps
+
+
+installing hadoop:
+https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SingleCluster.html
+
+**change the permission of hadoop folder:
+sudo chmod -R 777 /usr/local/hadoop
+
+**using command line manage files in hdfs:
+http://hortonworks.com/hadoop-tutorial/using-commandline-manage-files-hdfs/
+
+
+- Note : 
+	- run the sbt clean package command with sudo
+	- do not run the spark-submit command with sudo
+
+S3 Notes:
+1. for configuring the credentials for aws run the command - sudo aws configure( don't forget to mention sudo)	
+
+
+
+Note: while including libraries make sure that they all belong to same scala version
