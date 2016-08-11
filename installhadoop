@@ -1,0 +1,55 @@
+install java:  https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04
+Installing the Default JRE/JDK
+sudo apt-get update
+sudo apt-get install default-jre
+sudo apt-get install default-jdk
+
+Installing the Oracle JDK
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+
+Oracle JDK 8
+sudo apt-get install oracle-java8-installer
+
+install hadoop:
+wget http://apache.mirror.gtcomm.net/hadoop/common/hadoop-2.7.2/hadoop-2.7.2.tar.gz
+tar -xzvf hadoop-2.7.2.tar.gz
+mv hadoop-2.7.2 hadoop
+
+Setup Environment Variable
+cd
+ vi ~/.bashrc
+ export HADOOP_CONF=/home/ubuntu/hadoop/conf
+
+export HADOOP_PREFIX=/home/ubuntu/hadoop
+
+#Set JAVA_HOME
+
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+
+# Add Hadoop bin/ directory to path
+export PATH=$PATH:$HADOOP_PREFIX/bin
+
+To check whether its been updated correctly or not, reload bash profile, use following commands
+
+source ~/.bashrc
+echo $HADOOP_PREFIX
+echo $HADOOP_CONF
+
+
+hostname
+ifconfig
+sudo hostname ec2-52-91-12-63.compute-1.amazonaws.com
+sudo vi /etc/hosts
+
+
+chmod 644 ~/.ssh/authorized_keys
+chmod 400 EMRClusterKeyPair2014.pem
+eval "$(ssh-agent)"
+ssh-add EMRClusterKeyPair2014.pem
+Keep in mind ssh session will be lost upon shell exit and you have repeat ssh-agent and ssh-add commands.
+
+
+
+
+
