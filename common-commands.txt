@@ -1,15 +1,15 @@
 Rebuild:
-mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests clean package
+sudo mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests clean package
 
 Build:
-mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests package
+sudo mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests package
 
 continue from spark-sql_2.10:
-mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests package -rf :spark-repl_2.11
+sudo mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests package -rf :spark-repl_2.11
 
 Use scala version to 2.11 
 ./dev/change-scala-version.sh 2.11
-mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests package
+sudo mvn -Pyarn -Phadoop-2.7 -Dhadoop.version=2.7.2 -Phive -Phive-thriftserver -DskipTests package
 
 adding an environment variable:
 open ~./bashrc file
@@ -65,7 +65,8 @@ http://hortonworks.com/hadoop-tutorial/using-commandline-manage-files-hdfs/
 
 - Note : 
 	- run the sbt clean package command with sudo
-	- do not run the spark-submit command with sudo
+	- do not run the spark-submit command with sudo: you if run the command with sudo , spark would not be able to communicate with yarn and it would give error that yarn is is not running is exited
+	- some times spark is not able to load sql context in this case also clean up /tmp folder 
 
 S3 Notes:
 1. for configuring the credentials for aws run the command - sudo aws configure( don't forget to mention sudo)	
@@ -73,3 +74,10 @@ S3 Notes:
 
 
 Note: while including libraries make sure that they all belong to same scala version
+
+installing sqoop:
+https://github.com/vybs/sqoop-on-spark
+http://sqoop.apache.org/docs/1.99.6/BuildingSqoop2.html
+https://github.com/vybs/sqoop-on-spark/issues/2
+sqoop-spark- https://github.com/surrey-kapkoti/sqoop-on-spark
+

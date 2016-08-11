@@ -185,5 +185,21 @@ sales.map{ case (website, bytes_read, bytes_uploaded) => ((website), (bytes_read
 
 
 
+sudo $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.SiteAPISummary target/scala-2.10/weblogprocessor_2.10-0.0.1.jar
+sudo $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.ServerLoad target/scala-2.10/weblogprocessor_2.10-0.0.1.jar
+sudo $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.JsonParser target/scala-2.10/weblogprocessor_2.10-0.0.1.jar
+
+
+$SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.SiteAPISummary --master spark://10.60.0.242:7077 --deploy-mode cluster target/scala-2.10/weblogprocessor_2.10-0.0.1.jar
+$SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.SiteAPISummary target/scala-2.10/weblogprocessor_2.10-0.0.1.jar
+
+$SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.scala.BasicParseCsv target/scala-2.10/learning-spark-examples_2.10-0.0.1.jar
+
+
+
+
+sudo aws emr add-steps --cluster-id j-2CVKAWBKBX5V6 --steps Type=Spark,Name="WebLogProcessor",ActionOnFailure=CONTINUE,Args=[--master,yarn,--deploy-mode,cluster,--class,com.oreilly.learningsparkexamples.SiteAPISummary,s3://digitaljuice.hivetesting123/test/weblogprocessor_2.10-0.0.1.jar]
+
+
 
 

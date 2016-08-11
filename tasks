@@ -38,3 +38,136 @@ Things explored:
 
 
 TODO: read json from gzip single file and all files in a folder on local/S3
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+-Designing recommender system for 
+ 1. recommending contents to user
+ 2. content ranking
+ 3. Top 10 for David(based on social/relation data)
+ 4. show the predict rating for the recommended itens and give reason like - based on your interest in A,B,C...
+ 5. social support - > who all from your social network downloaded the content
+ 6. Genre rows liks - based on your interests (tags), your taste preferences created this row "independent"(e.g independent dramas featuring a strong female lead) as well as your interest in "some contents"
+    - personalized genre rows focus on user interest
+       - Also provide context and evidence
+    - How are they generated?
+       - Implicit: based on user's recent plays, downloads, ratings & other
+       - Explicit - taste preference
+       -hybrid
+    - Also take into account
+    	- Freshness- has this beed shown before?
+    	Diversity- avoid repeating tags and genres etc
+
+ 7. Similars: because you downloaded the content "XYZ" row, similar contents to download instantly, because you liked
+ 	- Displayed in many contexts:
+ 		- Display page
+ 		- In response to user actions (search, queue, add.. etc)
+ 		- "Because you watched" rows
+
+ 8.  recently watched, my list
+ 9. popular on digital juice
+
+Play data that can be collected:
+	-Duration
+	- start/stop/pause/rewind
+	- device,location,time
+	- page context
+
+Metadata:
+	- tags, keywords
+	- automatic annotation of contents
+	- metadata is useful for coldstart
+
+Social:
+	- can your "friends" help us in predict your better
+	- if we know enough about you, social info becomes less useful
+	- but, it is very interesting for coldstarting
+
+
+ - what data to use:
+ 1. Time
+ 2. Geo-information
+ 3. Impressions
+ 4. device info
+ 5. ratings
+ 6. metadata
+ 7. social
+ 8. member behavior
+ 9. demographics
+
+ Models to use:
+ 1. regression models(logistic, linear, elastic nets)
+ 2. SVD and other MF models
+ 3. Factorization machines
+ 4. Restricted Boltzmann Machines
+ 5. Markov chains & other graph models
+ 6. Clustering( from k-means to HDP)
+ 7. Latent Dirichlet Allocation
+ 8. Gradient Boosted Decision trees/random forests
+ 9. Deep ANN
+ 10. Association rules
+
+ Ranking -> Goal find the best possible ordersing of a set of videos for a user within a specific context in real time. Ranking = scoring + sorting + filtering( e.g using linear models)
+
+
+
+-Library to user - MLlib 
+
+-Language - scala
+
+-algorithm to use - ALS(Alternating Least square matrix factorization)
+
+-write the user-content download data directly to hdfs
+
+- Design:
+	-multi- layered services
+	-various personalization algorithm services
+		- ranking
+		- row selection 
+		- ratings etc
+	- Events & data distribution
+		- Collect actions
+			-plays, browsing, searches,ratings etc
+		- Events
+			- small units 
+			- time sensitive
+		-data 
+			- dense information
+			- processed for further use
+			- save
+	- computation layers:
+	 	- offline
+	 		-process data :
+	 			- collect sample of play data
+	 			- run batch learning algorithm to produce factorization
+	 			- publish item factors
+	 	- Nearline		
+	 		- process events:
+	 			- solve user factors
+	 			- compute user-item products
+	 			- combine	 			
+	 	- online
+	 		- process requests:
+	 			- presentation-context filtering
+	 			- serve recommendations
+	-Recommendation results:
+		- precomputed results
+			- fetch from data store
+			- post process in context
+		- Generated on the fly
+			- collect signals, apply model
+		- Combination
+		-Dynamically choose
+			-Fallback
+
+-NOTE: user spark 2.0.0
+-using the EMR cluster for batch processing for training the model
+-storing the user download data on s3,
+-starting a cluster with the job of training
+-build the program on the local system and then uploading it on s3, then submitting the job in a scheduled manner(think of this mechanism) 
+-think of online flow later
+
+
+
+/***************************************************************************************************************************************/
+
+

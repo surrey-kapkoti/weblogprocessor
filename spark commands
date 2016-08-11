@@ -1,1 +1,8 @@
 sudo $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.mini.scala.WordCount ./target/scala-2.10/learning-spark-mini-example_2.10-0.0.1.jar ./README.md ./wordcounts
+
+command for submitting the spark steps  to EMR:
+-build program using sbt
+-upload the jar file to s3
+-execute the following command 
+sudo aws emr add-steps --cluster-id j-2CVKAWBKBX5V6 --steps Type=Spark,Name="WebLogProcessor",ActionOnFailure=CONTINUE,Args=[--master,yarn,--deploy-mode,cluster,--class,com.oreilly.learningsparkexamples.SiteAPISummary,s3://digitaljuice.hivetesting123/test/weblogprocessor_2.10-0.0.1.jar]
+
