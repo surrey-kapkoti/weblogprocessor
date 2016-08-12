@@ -2,7 +2,7 @@ package com.oreilly.learningsparkexamples
 
 import org.apache.spark.sql.hive.HiveContext;
 import org.apache.spark.sql.SQLContext;
-import org.apache.spark.sql.SchemaRDD;
+//import org.apache.spark.sql.SchemaRDD;
 import org.apache.spark.sql.Row;
 import org.apache.spark._
 import org.apache.spark.SparkContext._

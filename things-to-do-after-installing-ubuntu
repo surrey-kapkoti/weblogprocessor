@@ -30,8 +30,11 @@ sudo apt-get install oracle-java8-installer
 
 install hadoop
 
-install sparl
+install spark
+
+install sbt
 
 install sqoop
 
+install teamviewer
 

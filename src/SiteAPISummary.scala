@@ -2,7 +2,7 @@ package com.oreilly.learningsparkexamples
 
 import org.apache.spark.sql.hive.HiveContext;
 import org.apache.spark.sql.SQLContext;
-import org.apache.spark.sql.SchemaRDD;
+//import org.apache.spark.sql.SchemaRDD;
 import org.apache.spark.sql.Row;
 import org.apache.spark._
 import org.apache.spark.SparkContext._
@@ -14,7 +14,7 @@ object SiteAPISummary {
 
     val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 
-    val path = "/home/hduser/Downloads/logs/"
+    val path = "/user/hduser/Downloads/logs/"
     val webLog = sqlContext.jsonFile(path)
 
     webLog.printSchema()
