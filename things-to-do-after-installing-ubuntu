@@ -9,4 +9,29 @@ for launching google-chrome&
 
 install git
 
+install python 2.7
+sudo apt-get install python2.7
+
+install keepass2
+sudo apt-add-repository ppa:jtaylor/keepass
+sudo apt-get update
+sudo apt-get install keepass2
+
+install aws-cli
+http://docs.aws.amazon.com/cli/latest/userguide/installing.html
+
+install jre
+sudo apt-get install default-jre
+
+install jdk8
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+
+install hadoop
+
+install sparl
+
+install sqoop
+
 

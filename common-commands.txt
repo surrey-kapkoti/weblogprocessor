@@ -26,9 +26,6 @@ build spark:
 4. set hadoop path in spark config file
 5. build spark using mvn
 
-
-
-
 install protobuff compiler 2.5.0 for building hadoop: a nice article
 http://stackoverflow.com/questions/29797763/how-do-i-install-protobuf-2-5-on-arch-linux-for-compiling-hadoop-2-6-0-using-mav
 dependency libtool, cmake and autoreconf should be installed
