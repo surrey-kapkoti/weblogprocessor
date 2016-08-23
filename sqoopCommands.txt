@@ -1,0 +1,21 @@
+sqoop import --connect 'jdbc:sqlserver://10.60.48.122;username=JuicyWorld;password=!MUhMQYgZkcfnaqr6iXGW;database=JuicyWorld_R1' --table DownloadsTracker --target-dir /data/DownloadsTracker --split-by -m 6
+
+sqoop job --create importDownloadData -- import --connect 'jdbc:sqlserver://10.60.48.122;username=JuicyWorld;password=!MUhMQYgZkcfnaqr6iXGW;database=JuicyWorld_R1' --table DownloadsTracker --target-dir /data/DownloadsTracker -m 1 --incremental append -check-column Updated
+ 
+sqoop job --exec importDownloadData
+
+
+
+https://download.microsoft.com/download/0/2/A/02AAE597-3865-456C-AE7F-613F99F850A8/sqljdbc_6.0.7507.100_enu.tar.gz
+untar this tar file
+copy the jar file- sqljdbc41.jar to /usr/lib/sqoop/lib
+
+command to delete a folder in hadoop:
+hadoop dfs -rmr hdfs://host:port/dir_path
+
+
+Sqoop query for importing from a given table 
+sqoop import --connect 'jdbc:sqlserver://10.60.48.122;username=JuicyWorld;password=!MUhMQYgZkcfnaqr6iXGW;database=JuicyWorld_R1' --table DownloadsTracker --where "updated > '2016-08-16 04:06:14.2270000'" --target-dir /user/DownloadsTracker 
+
+Sqoop query for a complicated query:
+sqoop import --connect 'jdbc:sqlserver://10.60.48.122;username=JuicyWorld;password=!MUhMQYgZkcfnaqr6iXGW;database=JuicyWorld_R1' --query 'SELECT acnt.AccountID_ , dt.ContentID,count(dt.ContentID) as cnt FROM DownloadsTracker as dt JOIN Acnt_Accounts as acnt on acnt.AccountID = dt.AccountID WHERE $CONDITIONS group by acnt.AccountID_, dt.ContentID ' --split-by acnt.AccountID_  --target-dir  /user/DownloadsTracker2
