@@ -34,7 +34,13 @@ install spark
 
 install sbt
 
-install sqoop
+install sqoop(refer : http://sawmyas-hadoop.blogspot.in/2015/12/sqoop-146-on-hadoop-270-cluster.html)
 
+download jdbcdriver for sqlserver and copy it to /usr/local/sqoop/lib(from https://www.microsoft.com/en-in/download/confirmation.aspx?id=11774)
+set HADOOP_MAPRED_HOME and 
+export HADOOP_COMMON_HOME=/home/hduser/softwares/hadoop/
+export HADOOP_MAPRED_HOME=/home/hduser/softwares/hadoop/
 install teamviewer
+
+
 

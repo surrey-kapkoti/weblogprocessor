@@ -16,8 +16,15 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-sql" % "2.0.0",
   "org.apache.spark" %% "spark-hive" % "2.0.0",
   "com.typesafe.play" % "play-json_2.10" % "2.4.8",
-  "com.fasterxml.jackson.core" % "jackson-core" % "2.8.0"  
+  "it.nerdammer.bigdata" % "spark-hbase-connector_2.10" % "1.0.3",
+  "com.fasterxml.jackson.core" % "jackson-core" % "2.8.0"    
 )
+
+libraryDependencies +=  "org.apache.hbase" % "hbase-common" % "1.0.3" excludeAll(ExclusionRule(organization = "javax.servlet", name="javax.servlet-api"), ExclusionRule(organization = "org.mortbay.jetty", name="jetty"), ExclusionRule(organization = "org.mortbay.jetty", name="servlet-api-2.5"))
+
+libraryDependencies +=  "org.apache.hbase" % "hbase-client" % "1.0.3" excludeAll(ExclusionRule(organization = "javax.servlet", name="javax.servlet-api"), ExclusionRule(organization = "org.mortbay.jetty", name="jetty"), ExclusionRule(organization = "org.mortbay.jetty", name="servlet-api-2.5"))
+
+libraryDependencies +=  "org.apache.hbase" % "hbase-server" % "1.0.3" excludeAll(ExclusionRule(organization = "javax.servlet", name="javax.servlet-api"), ExclusionRule(organization = "org.mortbay.jetty", name="jetty"), ExclusionRule(organization = "org.mortbay.jetty", name="servlet-api-2.5"))
 
 resolvers ++= Seq(
   "JBoss Repository" at "http://repository.jboss.org/nexus/content/repositories/releases/",

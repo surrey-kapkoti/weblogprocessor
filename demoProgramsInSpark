@@ -188,6 +188,9 @@ sales.map{ case (website, bytes_read, bytes_uploaded) => ((website), (bytes_read
 sudo $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.SiteAPISummary target/scala-2.10/weblogprocessor_2.10-0.0.1.jar
 sudo $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.ServerLoad target/scala-2.10/weblogprocessor_2.10-0.0.1.jar
 sudo $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.JsonParser target/scala-2.10/weblogprocessor_2.10-0.0.1.jar
+sudo $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.hbaseTest --packages it.nerdammer.bigdata:spark-hbase-connector_2.10:1.0.3 target/scala-2.11/weblogprocessor_2.11-0.0.1.jar 
+
+sudo spark-submit --jars $(echo lib/*.jar | tr ' ' ',') --class com.oreilly.learningsparkexamples.hbaseTest target/scala-2.11/hbase-test_2.11-0.0.1.jar
 
 
 $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.SiteAPISummary --master spark://10.60.0.242:7077 --deploy-mode cluster target/scala-2.10/weblogprocessor_2.10-0.0.1.jar
@@ -196,10 +199,19 @@ $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.SiteAPISu
 $SPARK_HOME/bin/spark-submit --class com.oreilly.learningsparkexamples.scala.BasicParseCsv target/scala-2.10/learning-spark-examples_2.10-0.0.1.jar
 
 
-
-
 sudo aws emr add-steps --cluster-id j-2CVKAWBKBX5V6 --steps Type=Spark,Name="WebLogProcessor",ActionOnFailure=CONTINUE,Args=[--master,yarn,--deploy-mode,cluster,--class,com.oreilly.learningsparkexamples.SiteAPISummary,s3://digitaljuice.hivetesting123/test/weblogprocessor_2.10-0.0.1.jar]
 
+for deploying a program to EMR
+1. first upload the jar package to s3://digitaljuice.hivetesting123/test/
+2. sudo aws emr add-steps --cluster-id j-2ATB6GZXDNU4S --steps Type=Spark,Name="RecommenderSystem",ActionOnFailure=CONTINUE,Args=[--master,yarn,--deploy-mode,cluster,--class,org.digitaljuice.itemrecommender.RecommenderTrainer,s3://digitaljuice.hivetesting123/jars/recommendersystem_2.11-0.0.1.jar]
+
+
+spark-submit --class org.digitaljuice.itemrecommender.RecommenderTrainer --master yarn --deploy-mode cluster target/scala-2.11/recommendersystem_2.11-0.0.1.jar
+
+./bin/spark-submit  --class org.apache.spark.sql.execution.datasources.hbase.examples.HBaseSource --master yarn-client     --num-executors 2     --driver-memory 512m     --executor-memory 512m     --executor-cores 1   --jars  /usr/hdp/current/hbase-client/lib/htrace-core-3.1.0-incubating.jar,/usr/hdp/current/hbase-client/lib/hbase-client.jar,/usr/hdp/current/hbase-client/lib/hbase-common.jar,/usr/hdp/current/hbase-client/lib/hbase-server.jar,/usr/hdp/current/hbase-client/lib/guava-12.0.1.jar,/usr/hdp/current/hbase-client/lib/hbase-protocol.jar,/usr/hdp/current/hbase-client/lib/htrace-core-3.1.0-incubating.jar  --files conf/hbase-site.xml /usr/hdp/current/spark-client/lib/hbase-spark-connector-1.0.0.jar
 
 
 
+import it.nerdammer.spark.hbase._
+val rdd = sc.parallelize(1 to 100).map(i => (i.toString, i+1, "Hello"))
+rdd.toHBaseTable("TableForSpark").toColumns("column1", "column2").inColumnFamily("cf").save()

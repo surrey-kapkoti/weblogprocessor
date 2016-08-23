@@ -38,25 +38,6 @@ http://stackoverflow.com/questions/29797763/how-do-i-install-protobuf-2-5-on-arc
 dependency libtool, cmake and autoreconf should be installed
 
 
--Problem : Datanode/name Node not starting :
-
-	-Solution:
-	STEP 1 : stop hadoop and clean temp files from hduser
-
-	sudo rm -R /tmp/*
-	sudo rm -r /app/hadoop/tmp
-	sudo mkdir -p /app/hadoop/tmp
-	sudo chown hduser:hadoop /app/hadoop/tmp
-	sudo chmod 750 /app/hadoop/tmp
-
-	STEP 2: format namenode
-	hdfs namenode -format
-
-	start-dfs.sh
-	start-yarn.sh
-	jps
-
-
 installing hadoop:
 https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SingleCluster.html
 
@@ -75,13 +56,39 @@ http://hortonworks.com/hadoop-tutorial/using-commandline-manage-files-hdfs/
 S3 Notes:
 1. for configuring the credentials for aws run the command - sudo aws configure( don't forget to mention sudo)	
 
+-Problem : Datanode/name Node not starting :
 
+	-Solution:
+	STEP 1 : stop hadoop and clean temp files from hduser
+
+	sudo rm -R /tmp/*
+	sudo rm -r /app/hadoop/name
+	sudo mkdir -p /app/hadoop/name
+	sudo chown hduser:hadoop /app/hadoop/name
+	sudo chmod 750 /app/hadoop/name
+
+	sudo rm -r /app/hadoop/data
+	sudo mkdir -p /app/hadoop/data
+	sudo chown hduser:hadoop /app/hadoop/data
+	sudo chmod 750 /app/hadoop/data
+
+	STEP 2: format namenode
+	hdfs namenode -format
+
+	start-dfs.sh
+	start-yarn.sh
+	jps
 
 Note: while including libraries make sure that they all belong to same scala version
+
 
 installing sqoop:
 https://github.com/vybs/sqoop-on-spark
 http://sqoop.apache.org/docs/1.99.6/BuildingSqoop2.html
 https://github.com/vybs/sqoop-on-spark/issues/2
 sqoop-spark- https://github.com/surrey-kapkoti/sqoop-on-spark
+
+Install SBT on amazon ec2:
+sudo yum install -y https://dl.bintray.com/sbt/rpm/sbt-0.13.12.rpm
+install maven : https://gist.github.com/sebsto/19b99f1fa1f32cae5d00
 
